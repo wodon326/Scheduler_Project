@@ -1,0 +1,8 @@
+process 1 1 7 1
+process 2 0 10 1
+process 3 4 6 1
+process 4 5 7 3
+process 5 3 11 2
+process 6 5 4 4
+process 7 4 8 3
+process 8 6 10 3
