@@ -290,6 +290,7 @@ public class Scheduler {
         CompByHRRN CompByHRRN = new CompByHRRN();
         Comparator<Process> compHRRNthenP = CompByHRRN.thenComparing(new CompByPriority());
         Comparator<Process> compHRRNthenPthenAT = compHRRNthenP.thenComparing(new CompByArriveTimeThenInputIndex());
+        Queue<Process> resortQueue = new LinkedList<>();
         TreeSet<Process> processTreeSet_HRRN = new TreeSet<>(compHRRNthenPthenAT);
         while(!processTreeSet_ArriveTime.isEmpty()||!processTreeSet_HRRN.isEmpty()){
             while(!processTreeSet_ArriveTime.isEmpty()){
@@ -307,9 +308,11 @@ public class Scheduler {
                 Now_time += select.getBurst_time();
                 add_Gantt_Chart(Gantt_Chart,new Result_Process(select.getPid(),select.getBurst_time(),true));
                 Output.add(new Result_Process(select.getPid(),Now_time-select.getArrive_time(),Now_time-select.getArrive_time()-select.getBurst_time(),Now_time-select.getArrive_time()-select.getBurst_time(),select.getPriority()));
-                if(!processTreeSet_HRRN.isEmpty()) {
-                    Process resort = processTreeSet_HRRN.pollFirst();
-                    processTreeSet_HRRN.add(resort);
+                while(!processTreeSet_HRRN.isEmpty()) {
+                    resortQueue.add(processTreeSet_HRRN.pollFirst());
+                }
+                while(!resortQueue.isEmpty()) {
+                    processTreeSet_HRRN.add(resortQueue.poll());
                 }
             }
             else{
