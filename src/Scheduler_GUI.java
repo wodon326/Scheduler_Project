@@ -298,8 +298,7 @@ class DrawGantt extends JPanel{
     public void paint(Graphics g){
         super.paint(g);
         if(Gantt_Chart==null) return;
-        setwidth = 400 / Total_Execution_time;
-        //setwidth = 760 / Total_Execution_time;
+        setwidth = 760 / Total_Execution_time;
         g.drawString(Integer.toString(Execution_time),0,90);
         for(Result_Process process : Gantt_Chart) {
             if(process.getisProcess()){
